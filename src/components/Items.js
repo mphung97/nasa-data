@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import LazyLoad from "react-lazyload";
 import { useSelector } from "react-redux";
-import { getSortAndTabItems } from "../selectors";
+import { getSortAndTabItems, sortSelector } from "../selectors";
 import Item from "./Item";
 
 const Loading = () => (
@@ -35,10 +35,15 @@ const Loading = () => (
 
 export default function ({ loading }) {
   const items = useSelector(getSortAndTabItems);
+  const sort = useSelector(sortSelector);
 
   useEffect(() => {
-    window.scrollTo(0, 1);
-    window.scrollTo(0, 0);
+    const currentY = window.pageYOffset;
+    window.scrollTo(0, currentY + 1);
+    window.scrollTo(0, currentY);
+  }, [sort]);
+
+  useEffect(() => {
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
