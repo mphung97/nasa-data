@@ -1,0 +1,8 @@
+export const DATA_FETCHING = 'DATA_FETCHING'
+export const DADA_SUCCESS = 'DADA_SUCCESS'
+export const DADA_ERROR = 'DADA_ERROR'
+export const LIKE = 'LIKE'
+export const REMOVE = 'REMOVE'
+export const EDIT = 'EDIT'
+export const SET_SORT = 'SET_SORT'
+export const SET_TAB = 'SET_TAB'
