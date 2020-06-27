@@ -12,7 +12,7 @@ import {
 } from "../actions";
 const endpoint = "https://images-api.nasa.gov/search?q=";
 
-export default function () {
+export default function ({ loading }) {
   const [query, setQuery] = useState("");
   const [emptyQ, setEmptyQ] = useState(false);
   const error = useSelector(errorSelector);
@@ -73,7 +73,7 @@ export default function () {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <button type="submit" className="btn active">
+            <button type="submit" className="btn active" disabled={loading}>
               search
             </button>
             <p className="text-error">
@@ -85,6 +85,7 @@ export default function () {
               type="button"
               onClick={() => dispatch(setSortNew())}
               className={`btn ${sortSelected === "NEW" && "active"}`}
+              disabled={loading}
             >
               newest
             </button>
@@ -92,6 +93,7 @@ export default function () {
               type="button"
               onClick={() => dispatch(setSortOld())}
               className={`btn ${sortSelected === "OLD" && "active"}`}
+              disabled={loading}
             >
               oldest
             </button>
@@ -99,6 +101,7 @@ export default function () {
               type="button"
               onClick={() => dispatch(setSortAZ())}
               className={`btn ${sortSelected === "AZ" && "active"}`}
+              disabled={loading}
             >
               a-z
             </button>
@@ -106,6 +109,7 @@ export default function () {
               type="button"
               onClick={() => dispatch(setSortZA())}
               className={`btn ${sortSelected === "ZA" && "active"}`}
+              disabled={loading}
             >
               z-a
             </button>

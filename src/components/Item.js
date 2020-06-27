@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toggleLike, toggleRemove, toggleModal } from "../actions";
 import { toShortDay } from "../utils";
@@ -12,6 +12,9 @@ export default function ({
   title,
 }) {
   const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("render");
+  }, []);
   return (
     <div className="item">
       <div className="item-header">

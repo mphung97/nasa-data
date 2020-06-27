@@ -1,20 +1,58 @@
-import React from "react";
+import React, { useEffect } from "react";
+import LazyLoad from "react-lazyload";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { loadingSelector, getSortAndTabItems } from "../selectors";
+import { getSortAndTabItems } from "../selectors";
 import Item from "./Item";
 
-export default function () {
-  const loading = useSelector(loadingSelector);
+const Loading = () => (
+  <div className="item loading">
+    <div
+      className="item-header"
+      style={{ height: "24px", backgroundColor: "#e8e8e8" }}
+    >
+      <span></span>
+    </div>
+    <div className="item-content">
+      <div
+        className="item-title"
+        style={{
+          height: "16px",
+          marginBottom: "1px",
+          backgroundColor: "#e8e8e8",
+        }}
+      >
+        <span></span>
+      </div>
+      <div
+        className="item-desc"
+        style={{ height: "75px", backgroundColor: "#e8e8e8" }}
+      >
+        <span></span>
+      </div>
+    </div>
+  </div>
+);
+
+export default function ({ loading }) {
   const items = useSelector(getSortAndTabItems);
 
   useEffect(() => {
+    window.scrollTo(0, 1);
+    window.scrollTo(0, 0);
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
   return (
     <>
-      {loading && "fetching..."}
+      {loading && (
+        <p className="text-center">
+          <span className="lds-ring">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </p>
+      )}
       {!loading && !items.length ? (
         <p className="text-error text-center" style={{ marginTop: "3rem" }}>
           Nothing here!
@@ -22,7 +60,9 @@ export default function () {
       ) : (
         <div className="items">
           {items.map((item) => (
-            <Item key={item.nasa_id} {...item} />
+            <LazyLoad key={item.nasa_id} placeholder={<Loading />}>
+              <Item key={item.nasa_id} {...item} />
+            </LazyLoad>
           ))}
         </div>
       )}

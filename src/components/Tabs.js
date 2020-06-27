@@ -1,9 +1,9 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { tabSelector } from '../selectors';
-import { setTabAll, setTabLiked, setTabRemoved } from '../actions';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { tabSelector } from "../selectors";
+import { setTabAll, setTabLiked, setTabRemoved } from "../actions";
 
-export default function () {
+export default function ({ loading }) {
   const tabSelected = useSelector(tabSelector);
   const dispatch = useDispatch();
   return (
@@ -12,6 +12,7 @@ export default function () {
         type="button"
         onClick={() => dispatch(setTabAll())}
         className={`btn ${tabSelected === "ALL" && "active"}`}
+        disabled={loading}
       >
         all
       </button>
@@ -19,6 +20,7 @@ export default function () {
         type="button"
         onClick={() => dispatch(setTabLiked())}
         className={`btn ${tabSelected === "LIKED" && "active"}`}
+        disabled={loading}
       >
         liked
       </button>
@@ -26,6 +28,7 @@ export default function () {
         type="button"
         onClick={() => dispatch(setTabRemoved())}
         className={`btn ${tabSelected === "REMOVED" && "active"}`}
+        disabled={loading}
       >
         removed
       </button>
