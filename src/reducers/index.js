@@ -9,6 +9,7 @@ import {
   EDIT,
   SET_SORT,
   SET_TAB,
+  MODAL,
 } from "../actions";
 
 const initialState = {
@@ -17,6 +18,8 @@ const initialState = {
   error: "",
   tab: "ALL",
   sort: "NEW",
+  showModal: false,
+  selectedId: "",
 };
 
 function appReducer(state = initialState, action) {
@@ -54,6 +57,25 @@ function appReducer(state = initialState, action) {
             ? {
                 ...item,
                 remove: !item.remove,
+              }
+            : item
+        ),
+      };
+    case MODAL:
+      return {
+        ...state,
+        showModal: action.show,
+        selectedId: action.id,
+      };
+    case EDIT:
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.nasa_id === action.id
+            ? {
+                ...item,
+                title: action.title,
+                description: action.desc,
               }
             : item
         ),

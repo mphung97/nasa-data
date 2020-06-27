@@ -10,13 +10,34 @@ export const loadingSelector = createSelector(
 );
 export const tabSelector = createSelector(appSelector, (app) => app.tab);
 export const sortSelector = createSelector(appSelector, (app) => app.sort);
+export const showModalSelector = createSelector(
+  appSelector,
+  (app) => app.showModal
+);
+export const currentIdSelecter = createSelector(
+  appSelector,
+  (app) => app.selectedId
+);
+
+export const getItemById = createSelector(
+  [itemsSelector, currentIdSelecter],
+  (items, id) => {
+    return items.find((item) => item.nasa_id === id) || {
+      nasa_id: "",
+      title: "",
+      description: ""
+    };
+  }
+);
 
 export const getTabItems = createSelector(
   [itemsSelector, tabSelector],
   (items, tab) => {
     switch (tab) {
       case "LIKED":
-        return items.filter((item) => item.like === true && item.remove === false);
+        return items.filter(
+          (item) => item.like === true && item.remove === false
+        );
       case "REMOVED":
         return items.filter((item) => item.remove === true);
       default:
