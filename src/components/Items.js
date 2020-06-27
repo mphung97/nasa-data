@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { loadingSelector, getSortAndTabItems } from '../selectors';
-import Item from './Item';
+import { loadingSelector, getSortAndTabItems } from "../selectors";
+import Item from "./Item";
 
-export default function() {
+export default function () {
   const loading = useSelector(loadingSelector);
   const items = useSelector(getSortAndTabItems);
 
@@ -16,7 +16,9 @@ export default function() {
     <>
       {loading && "fetching..."}
       {!loading && !items.length ? (
-        <p className="text-error">Nothing to show</p>
+        <p className="text-error text-center" style={{ marginTop: "3rem" }}>
+          Nothing here!
+        </p>
       ) : (
         <div className="items">
           {items.map((item) => (

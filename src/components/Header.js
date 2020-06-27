@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { errorSelector, sortSelector } from '../selectors';
-import { fetching, fetchSuccess, fetchError, setSortNew, setSortOld, setSortAZ, setSortZA } from '../actions';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { errorSelector, sortSelector } from "../selectors";
+import {
+  fetching,
+  fetchSuccess,
+  fetchError,
+  setSortNew,
+  setSortOld,
+  setSortAZ,
+  setSortZA,
+} from "../actions";
 const endpoint = "https://images-api.nasa.gov/search?q=";
 
 export default function () {
   const [query, setQuery] = useState("");
+  const [emptyQ, setEmptyQ] = useState(false);
   const error = useSelector(errorSelector);
   const sortSelected = useSelector(sortSelector);
 
@@ -13,7 +22,10 @@ export default function () {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!query) return;
+    if (!query) {
+      setEmptyQ(true);
+      return;
+    }
     dispatch(fetching());
     fetch(`${endpoint}${query}`)
       .then((response) => response.json())
@@ -38,6 +50,7 @@ export default function () {
       })
       .catch((err) => dispatch(fetchError(err.message)));
     setQuery("");
+    setEmptyQ(false);
   };
 
   return (
@@ -63,6 +76,9 @@ export default function () {
             <button type="submit" className="btn active">
               search
             </button>
+            <p className="text-error">
+              {emptyQ && !query && "Please input to search"}
+            </p>
           </form>
           <div>
             <button
