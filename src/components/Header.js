@@ -28,7 +28,12 @@ export default function ({ loading }) {
     }
     dispatch(fetching());
     fetch(`${endpoint}${query}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch data!");
+        }
+        return response.json();
+      })
       .then((data) => data.collection)
       .then((collection) => collection.items)
       .then((items) =>

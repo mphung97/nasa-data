@@ -12,7 +12,7 @@ import {
   MODAL,
 } from "../actions";
 
-const initialState = {
+export const initialState = {
   items: JSON.parse(localStorage.getItem("items")) || [],
   loading: false,
   error: "",
@@ -22,17 +22,17 @@ const initialState = {
   selectedId: "",
 };
 
-function appReducer(state = initialState, action) {
+export function appReducer(state = initialState, action) {
   switch (action.type) {
     case DATA_FETCHING:
-      return { ...initialState, items: [], loading: true, erorr: "" };
+      return { ...initialState, items: [], loading: true, error: "" };
     case DADA_SUCCESS:
       return {
         ...initialState,
         items: action.items,
       };
     case DADA_ERROR:
-      return { ...state, loading: false, erorr: action.payload };
+      return { ...state, loading: false, error: action.payload };
     case SET_TAB:
       return { ...state, tab: action.payload, sort: "NEW" };
     case SET_SORT:
