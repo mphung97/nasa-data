@@ -22,11 +22,13 @@ export const currentIdSelecter = createSelector(
 export const getItemById = createSelector(
   [itemsSelector, currentIdSelecter],
   (items, id) => {
-    return items.find((item) => item.nasa_id === id) || {
-      nasa_id: "",
-      title: "",
-      description: ""
-    };
+    return (
+      items.find((item) => item.nasa_id === id) || {
+        nasa_id: "",
+        title: "",
+        description: "",
+      }
+    );
   }
 );
 

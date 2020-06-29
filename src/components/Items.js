@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import LazyLoad from "react-lazyload";
 import { useSelector } from "react-redux";
-import { getSortAndTabItems, sortSelector } from "../selectors";
+import { getSortAndTabItems, sortSelector, itemsSelector } from "../selectors";
 import Item from "./Item";
 
 const Loading = () => (
@@ -35,6 +35,7 @@ const Loading = () => (
 
 export default function ({ loading }) {
   const items = useSelector(getSortAndTabItems);
+  const itemsInStore = useSelector(itemsSelector);
   const sort = useSelector(sortSelector);
 
   useEffect(() => {
@@ -44,8 +45,14 @@ export default function ({ loading }) {
   }, [sort]);
 
   useEffect(() => {
-    localStorage.setItem("items", JSON.stringify(items));
-  }, [items]);
+    if (items.length === itemsInStore.length) {
+      localStorage.setItem("items", JSON.stringify(itemsInStore));
+    }
+  }, [items, itemsInStore]);
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(itemsInStore));
+  }, [itemsInStore]);
 
   return (
     <>
