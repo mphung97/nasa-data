@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import LazyLoad from "react-lazyload";
 import { useSelector } from "react-redux";
-import { getSortAndTabItems, sortSelector, itemsSelector } from "../selectors";
+import { getSortAndTabItems, itemsSelector } from "../selectors";
 import Item from "./Item";
 
 const Loading = () => (
@@ -36,13 +36,6 @@ const Loading = () => (
 export default function ({ loading }) {
   const items = useSelector(getSortAndTabItems);
   const itemsInStore = useSelector(itemsSelector);
-  const sort = useSelector(sortSelector);
-
-  useEffect(() => {
-    const currentY = window.pageYOffset;
-    window.scrollTo(0, currentY + 1);
-    window.scrollTo(0, currentY);
-  }, [sort]);
 
   useEffect(() => {
     if (items.length === itemsInStore.length) {
@@ -72,7 +65,7 @@ export default function ({ loading }) {
       ) : (
         <div className="items">
           {items.map((item) => (
-            <LazyLoad key={item.nasa_id} placeholder={<Loading />}>
+            <LazyLoad key={item.nasa_id} offset={100} placeholder={<Loading />}>
               <Item key={item.nasa_id} {...item} />
             </LazyLoad>
           ))}
